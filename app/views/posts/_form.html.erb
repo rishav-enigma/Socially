@@ -1,0 +1,24 @@
+<%= form_with(model: post) do |form| %>
+  <% if post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+        <% post.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="row">
+    <div class="col-lg-9">
+      <%= text_area :post, :content, placeholder: "What's on your mind?", class: "form-control", autofocus: true%>
+    </div>
+    <div class="col-lg-3">
+      <%= form.select :visibility, visibility: Post.visibilities.keys.to_a%>
+      <div class="actions">
+        <%= form.submit "Create", class:"btn btn-primary" %>
+      </div>
+    </div>
+  </div>
+<% end %>
