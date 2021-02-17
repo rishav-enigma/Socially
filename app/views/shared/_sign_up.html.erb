@@ -19,8 +19,8 @@
     <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Confirm your password" , class: "form-control"%>
   </div>
   <div class="col-lg-10 mt-2">
-    <%= f.label :image%>
-    <%= f.file_field :image, class:"form-control-file"%>
+    <%= f.label :upload_your_profile_pic%>
+    <%= f.file_field :image, class:"form-control-file", accept: "image/jpeg,image/gif,image/png"%>
   </div>
   <div class="col-lg-10 mt-2">
     <%= f.submit "Sign up", class:"btn btn-primary" %>

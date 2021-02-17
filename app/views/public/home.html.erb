@@ -1,19 +1,21 @@
   <div class="row mt-4" style="margin:auto">
     <div class="col-xl-3">
-      <div class="card">
-        <div class="d-flex align-items-center">
-          <div class="image"> <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80" class="rounded" width="75"> </div>
-          <div class="ml-3 w-100">
-            <h4 class="mb-0 mt-0">Alex Morrision</h4> <span>Senior Journalist</span>
-            <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
-              <div class="d-flex flex-column"> <span class="articles">Articles</span> <span class="number1">38</span> </div>
-              <div class="d-flex flex-column"> <span class="followers">Followers</span> <span class="number2">980</span> </div>
-              <div class="d-flex flex-column"> <span class="rating">Rating</span> <span class="number3">8.9</span> </div>
+      <% if user_signed_in? %>
+        <div class="card">
+          <div class="d-flex align-items-center">
+            <div class="image"> <%= image_tag(current_user.image.url, class: "rounded", width: "75") if current_user.image?  %> </div>
+            <div class="ml-3 w-100">
+              <h4 class="mb-0 mt-0"><%= current_user.name %></h4> <span><%= "@"+current_user.username %></span>
+              <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
+                <div class="d-flex flex-column"> <span class="articles">Articles</span> <span class="number1">38</span> </div>
+                <div class="d-flex flex-column"> <span class="followers">Followers</span> <span class="number2">980</span> </div>
+                <div class="d-flex flex-column"> <span class="rating">Rating</span> <span class="number3">8.9</span> </div>
+              </div>
+              <div class="button mt-2 d-flex flex-row align-items-center"> <button class="btn btn-sm btn-outline-primary w-100">My Posts</button> <button class="btn btn-sm btn-primary w-100 ml-2">Edit</button> </div>
             </div>
-            <div class="button mt-2 d-flex flex-row align-items-center"> <button class="btn btn-sm btn-outline-primary w-100">Chat</button> <button class="btn btn-sm btn-primary w-100 ml-2">Follow</button> </div>
           </div>
         </div>
-      </div>
+      <% end %>
     </div>
     <div class="col-xl-6">
       <div class="card text-center">
@@ -31,21 +33,23 @@
       </div>
     </div>
     <div class="col-xl-3">
-      <ul class="nav nav-tabs">
-        <li class="nav-item">
-          <a class="nav-link active" data-toggle="tab" href="#sign_in">Sign In</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" data-toggle="tab" href="#sign_up">Sign Up</a>
-        </li>
-      </ul>
-      <div class="tab-content">
-        <div id="sign_in" class="tab-pane active in">
-          <%= render partial: "shared/sign_in" %>
+      <% if !user_signed_in? %>
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#sign_in">Sign In</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#sign_up">Sign Up</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div id="sign_in" class="tab-pane active in">
+            <%= render partial: "shared/sign_in" %>
+          </div>
+          <div id="sign_up" class="tab-pane fade">
+            <%= render partial: "shared/sign_up" %>
+          </div>
         </div>
-        <div id="sign_up" class="tab-pane fade">
-          <%= render partial: "shared/sign_up" %>
-        </div>
-      </div>
+      <%  end %>
     </div>
   </div>
