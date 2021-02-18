@@ -1,6 +1,13 @@
 <div class="card text-center mb-4">
   <div class="card-header">
-    <%= link_to "@"+post.user.username, edit_user_registration_path %>
+    <div class="row">
+      <div class="col">
+        <%= link_to "@"+post.user.username, edit_user_registration_path %>
+      </div>
+      <div class="col text-muted">
+        <%= time_ago_in_words(post.created_at) %>
+      </div>
+    </div>
   </div>
   <div class="card-body">
     <p class="card-text"><%= post.content %></p>
@@ -8,7 +15,29 @@
       <%= link_to "View", post, class: "btn btn-primary"%>
     <% end %>
   </div>
-  <div class="card-footer text-muted">
-    <%= time_ago_in_words(post.created_at) %>
+  <div class="card-footer text-left">
+    <% if post.comments.any? || user_signed_in? %>
+      <h3>Comments</h3>
+    <% end %>
+    <% if post.comments.any? %>
+      <% post.comments.limit(@limit).each do |comment| %>
+        <div class="card">
+          <div class="card-body">
+            <%= link_to "@"+comment.user.username, edit_user_registration_path %>
+            <p class="card-subtitle"><%= comment.content%></p>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+    <% if user_signed_in? %>
+      <%= form_for [post, @comment] do |form| %>
+        <div class="input-group mb-3">
+          <%= form.text_field :content, placeholder:"Add a comment", class: "form-control"%>
+          <div class="input-group-append">
+            <%= form.submit "+", class:"btn btn-outline-secondary" %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
   </div>
 </div>

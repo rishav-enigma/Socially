@@ -5,7 +5,8 @@ class User < ApplicationRecord
   validate :image_size
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  has_many :posts
+  has_many :posts, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   def feed
     posts_on_feed = Array(Post.where(visibility: "everyone"))

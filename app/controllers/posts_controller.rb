@@ -4,10 +4,14 @@ class PostsController < ApplicationController
   # GET /posts or /posts.json
   def index
     @posts = Post.all
+    @comment = Comment.new
+    @limit = 5
   end
 
   # GET /posts/1 or /posts/1.json
   def show
+    @comment = Comment.new
+    @limit = @post.comments.count
   end
 
   # GET /posts/new
