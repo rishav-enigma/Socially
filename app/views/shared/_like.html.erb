@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="col">
+    <%= post.likes.count %> <%= (post.likes.count) == 1 ? 'Like' : 'Likes'%>
+  </div>
+  <div class="col">
+    <% if user_signed_in? && current_user.likes?(post) %>
+      <% like = Like.where(post_id: post.id, user_id: current_user.id) %>
+      <%= link_to "Unlike", post_like_path(post, like), method: :delete, remote: true, class: "btn btn-danger float-right" %>
+    <% elsif user_signed_in?%>
+      <%= link_to "Like", post_likes_path(post), method: :post, remote: true, class: "btn btn-primary float-right"  %>
+    <% end %>
+  </div>
+</div>
