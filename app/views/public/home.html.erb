@@ -23,20 +23,7 @@
           <%= render "posts/form", post: @post %>
         </div>
       <% end %>
-      <% @feed_posts.each do |post| %>
-        <div class="card text-center mb-4">
-          <div class="card-header">
-            <%= link_to "@"+post.user.username, edit_user_registration_path %>
-          </div>
-          <div class="card-body">
-            <p class="card-text"><%= post.content %></p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-          </div>
-          <div class="card-footer text-muted">
-            <%= time_ago_in_words(post.created_at) %>
-          </div>
-        </div>
-      <% end %>
+      <%= render "shared/feed", feed_posts: @feed_posts %>
     </div>
     <div class="col-xl-3">
       <% if !user_signed_in? %>
