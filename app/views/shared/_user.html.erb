@@ -1,0 +1,27 @@
+<div class="card mb-4">
+  <div class="d-flex align-items-center">
+    <div class="image"> <%= image_tag(user.image.url, class: "rounded", width: "75") if user.image?  %> </div>
+    <div class="ml-3 w-100">
+      <h4 class="mb-0 mt-0"><%= user.name %></h4> <span><%= "@"+user.username %></span>
+      <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
+        <div class="d-flex flex-column"> <span class="articles">Posts</span> <span class="number1"><%= user.posts.count %></span> </div>
+        <div class="d-flex flex-column"> <span class="followers">Friends</span> <span class="number2"><%= user.active_friends.count %></span> </div>
+        <div class="d-flex flex-column"> <span class="rating">Rating</span> <span class="number3">8.9</span> </div>
+      </div>
+      <div class="button mt-2 d-flex flex-row align-items-center"> 
+        <button class="btn btn-sm btn-outline-primary w-100">Posts</button> 
+        <% if user == current_user %>
+          <button class="btn btn-sm btn-primary w-100 ml-2">Edit</button>
+        <%else %>
+          <% if current_user.pending_friends.include?(user) %>
+            <%= link_to "Friend Request Sent", 'javascript:;', class:"btn btn-sm disabled w-100 ml-2"%>
+          <% elsif current_user.active_friends.include?(user)  %>
+            <%= link_to "Friends", 'javascript:;', class:"btn btn-sm disabled w-100 ml-2"%>
+          <% else %>
+            <%= link_to current_user.friend_requests.include?(user) ? "Confirm" : "Add Friend", friendships_create_path(user: current_user, friend: user), class:"btn btn-sm btn-primary w-100 ml-2", remote: true %>
+          <% end %>
+        <% end %>
+        </div>
+    </div>
+  </div>
+</div>
