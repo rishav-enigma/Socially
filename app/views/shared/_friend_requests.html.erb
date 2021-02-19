@@ -1,0 +1,18 @@
+<% if current_user.received_friends.any? %>
+  <% current_user.received_friends.each do |friend| %>
+    <div class="card">
+      <div class="d-flex align-items-center">
+        <div class="image"> <%= image_tag(friend.image.url, class: "rounded", width: "75") if friend.image?  %> </div>
+        <div class="ml-3 w-100">
+          <h5 class="mb-0 mt-0"><%= friend.name %></h5> <span><%= "@"+friend.username %></span>
+          <div class="btn-group" role="group" aria-label="Friend Request actions">
+            <%= link_to "Confirm", friendships_create_path(user: current_user, friend: friend) %>
+            <%= link_to "Delete", friendships_destroy_path(user: current_user, friend: friend) %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+    <h3>You don't have any new requests</h3>
+<% end %>

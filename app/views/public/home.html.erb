@@ -43,6 +43,11 @@
             <%= render partial: "shared/sign_up" %>
           </div>
         </div>
+      <% else %>
+        <div class="card-footer text-left">
+          <h3>Friend Requests</h3>
+          <%= render "shared/friend_requests" %>
+        </div>
       <%  end %>
     </div>
   </div>
