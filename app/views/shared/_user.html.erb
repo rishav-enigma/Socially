@@ -15,10 +15,15 @@
         <%elsif user_signed_in? %>
           <% if current_user.pending_friends.include?(user) %>
             <%= link_to "Friend Request Sent", 'javascript:;', class:"btn btn-sm disabled w-100 ml-2"%>
+            <%= link_to "Delete", friendships_destroy_path(user: current_user, friend: user), class: "btn btn-sm btn-danger w-100 ml-2"%>
           <% elsif current_user.active_friends.include?(user)  %>
             <%= link_to "Friends", 'javascript:;', class:"btn btn-sm disabled w-100 ml-2"%>
+            <%= link_to "Delete", friendships_destroy_path(user: current_user, friend: user), class: "btn btn-sm btn-danger w-100 ml-2"%>
+          <% elsif current_user.friend_requests.include?(user) %>
+            <%= link_to  "Confirm", friendships_create_path(user: current_user, friend: user), class:"btn btn-sm btn-primary w-100 ml-2", remote: true %>
+            <%= link_to "Delete", friendships_destroy_path(user: current_user, friend: user), class: "btn btn-sm btn-danger w-100 ml-2"%>
           <% else %>
-            <%= link_to current_user.friend_requests.include?(user) ? "Confirm" : "Add Friend", friendships_create_path(user: current_user, friend: user), class:"btn btn-sm btn-primary w-100 ml-2", remote: true %>
+            <%= link_to  "Add Friend", friendships_create_path(user: current_user, friend: user), class:"btn btn-sm btn-primary w-100 ml-2", remote: true %>
           <% end %>
         <% end %>
         </div>

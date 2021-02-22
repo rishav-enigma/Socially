@@ -7,6 +7,7 @@ class FriendshipsController < ApplicationController
       flash.now[:notice] = "You are friends with " + @friend.username
       respond_to do |format|
         format.js
+        format.html { redirect_to users_index_path, alert: "User added succesfully"  }
       end
     else
       flash.now[:danger] = "Error occurred. Please refresh and try again"
@@ -23,6 +24,7 @@ class FriendshipsController < ApplicationController
     flash.now[:danger] = "You removed " + @friend.username
     respond_to do |format|
       format.js
+      format.html { redirect_to users_index_path, alert: "User removed succesfully" }
     end
   end
 end

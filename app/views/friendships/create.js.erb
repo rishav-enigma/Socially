@@ -1,1 +1,1 @@
-$("#user_request_<%= @friend.id %>").html("<%= j render partial: 'shared/friend_requests', locals: {user: @user } %>");
+$("#user_request_<%= @friend.id %>").empty().html("<%= j render partial: 'shared/friend_requests', locals: {user: @user } %>");
