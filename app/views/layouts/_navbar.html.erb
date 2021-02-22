@@ -10,6 +10,12 @@
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <% if user_signed_in? %>
+        <%= form_tag search_friend_path, method: :get, class:"form-inline my-2 my-lg-0" do %>
+              <%= text_field_tag :friend, params[:friend], placeholder: "Search user", autofocus: true, class: "form-control mr-sm-2" %>
+              <%= button_tag type: :submit, class: "btn btn-outline-success my-2 my-sm-0" do %>
+                <%= "Search" %>
+              <% end %>
+        <% end %>
         <li class="nav-item"><%= link_to "Users", users_index_path, class: "nav-link" %></li>
         <li class="nav-item"><%= link_to "Welcome " + current_user.username, users_show_path(user_id: current_user.id), class: "nav-link" %></li>
         <li class="nav-item"><%= link_to "Log Out", destroy_user_session_path , method: :delete, class: "nav-link"%></li>

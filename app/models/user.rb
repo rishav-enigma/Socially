@@ -41,6 +41,11 @@ class User < ApplicationRecord
     post.likes.where(user_id: id).any?
   end
   
+  def self.search(searchstring)
+  	searchstring.strip!
+    where("email like ?","%#{searchstring}%").or(where("name like ?","%#{searchstring}%").or(where("username like ?","%#{searchstring}%")))
+  end
+
   private
   def image_size
     errors.add(:image, "should be less than 5MB") if image.size >5.megabytes

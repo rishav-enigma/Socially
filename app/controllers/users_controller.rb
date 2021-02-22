@@ -1,4 +1,26 @@
 class UsersController < ApplicationController
+
+  def search
+    if params[:friend].present?
+      @friend = User.search(params[:friend])
+      if @friend
+        respond_to do |format|
+          format.html
+        end
+      else
+        respond_to do |format|
+          flash.now[:alert] = "Couldn't find user"
+          format.html
+        end
+      end    
+    else
+      respond_to do |format|
+        flash.now[:alert] = "Please enter a friend name or email to search"
+        format.html
+      end
+    end
+  end
+
   def index
     if user_signed_in?
       @users = User.where.not(id: current_user.id).paginate(page: params[:page], per_page: 5)
