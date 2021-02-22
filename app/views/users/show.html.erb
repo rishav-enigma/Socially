@@ -1,2 +1,37 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+  <div class="row mt-4" style="margin:auto">
+    <div class="col-xl-3">
+      <%= render partial: "shared/user", locals: { user: @user } %>
+      <h3>Friends</h3>
+      <% @user.active_friends.each do |user| %>
+        <div class="container"><%= render partial: "shared/user", locals: {user: user}%></div>
+      <% end %>
+    </div>
+    <div class="col-xl-6">
+      <%= render "shared/feed", feed_posts: @posts %>
+    </div>
+    <div class="col-xl-3">
+      <% if !user_signed_in? %>
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#sign_in">Sign In</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#sign_up">Sign Up</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div id="sign_in" class="tab-pane active in">
+            <%= render partial: "shared/sign_in" %>
+          </div>
+          <div id="sign_up" class="tab-pane fade">
+            <%= render partial: "shared/sign_up" %>
+          </div>
+        </div>
+      <% else %>
+        <div class="card-footer text-left">
+          <h3>Friend Requests</h3>
+          <%= render "shared/friend_requests" %>
+        </div>
+      <%  end %>
+    </div>
+  </div>

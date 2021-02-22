@@ -1,0 +1,6 @@
+<p id="notice"><%= notice %></p>
+
+<h1> @<%= @user.username %>'s Posts</h1>
+<div class="container">
+  <%= render partial: "shared/feed", locals: {feed_posts: @posts} %>
+</div>

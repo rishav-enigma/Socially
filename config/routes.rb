@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   end
   get 'users/index'
   get 'users/show'
+  get 'users/posts'
   devise_for :users
   root 'public#home'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

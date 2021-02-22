@@ -9,10 +9,10 @@
         <div class="d-flex flex-column"> <span class="rating">Rating</span> <span class="number3">8.9</span> </div>
       </div>
       <div class="button mt-2 d-flex flex-row align-items-center"> 
-        <button class="btn btn-sm btn-outline-primary w-100">Posts</button> 
-        <% if user == current_user %>
-          <button class="btn btn-sm btn-primary w-100 ml-2">Edit</button>
-        <%else %>
+        <%= link_to "Posts", users_posts_path(user_id: user.id), class: "btn btn-sm btn-outline-primary w-100" %>
+        <% if user_signed_in? && user == current_user %>
+          <%= link_to "Edit", edit_user_registration_path, class: "btn btn-sm btn-primary w-100 ml-2" %>
+        <%elsif user_signed_in? %>
           <% if current_user.pending_friends.include?(user) %>
             <%= link_to "Friend Request Sent", 'javascript:;', class:"btn btn-sm disabled w-100 ml-2"%>
           <% elsif current_user.active_friends.include?(user)  %>

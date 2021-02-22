@@ -2,7 +2,7 @@
   <div class="card-header">
     <div class="row">
       <div class="col">
-        <%= link_to "@"+post.user.username, edit_user_registration_path %>
+        <%= link_to "@"+post.user.username, users_show_path(user_id: post.user.id) %>
       </div>
       <div class="col text-muted">
         <%= time_ago_in_words(post.created_at) %>
@@ -30,7 +30,7 @@
       <% post.comments.limit(@limit).each do |comment| %>
         <div class="card">
           <div class="card-body">
-            <%= link_to "@"+comment.user.username, edit_user_registration_path %>
+            <%= link_to "@"+comment.user.username, users_show_path(user_id: comment.user.id) %>
             <p class="card-subtitle"><%= comment.content%></p>
           </div>
         </div>
