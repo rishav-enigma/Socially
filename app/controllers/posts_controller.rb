@@ -1,22 +1,26 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[ show edit update destroy ]
-
+  before_action :authenticate_user!, except: [:index, :show]
+  load_and_authorize_resource only: [:edit, :new, :update, :create, :destroy]
   # GET /posts or /posts.json
   def index
-    @posts = Post.all
-    @comment = Comment.new
+    @comment = Comment.new if user_signed_in?
     @limit = 5
+    if user_signed_in? && current_user.feed
+      @posts= current_user.feed
+    else
+      @posts = Post.all.where(visibility: Post.visibilities["everyone"]).order(created_at: :desc)
+    end
   end
 
   # GET /posts/1 or /posts/1.json
   def show
+    @post = Post.find(params[:id])
     @comment = Comment.new
     @limit = @post.comments.count
   end
 
   # GET /posts/new
   def new
-    @post = Post.new
   end
 
   # GET /posts/1/edit
@@ -56,10 +60,6 @@ class PostsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_post
-      @post = Post.find(params[:id])
-    end
 
     # Only allow a list of trusted parameters through.
     def post_params
