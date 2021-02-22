@@ -6,9 +6,9 @@ class PostsController < ApplicationController
     @comment = Comment.new if user_signed_in?
     @limit = 5
     if user_signed_in? && current_user.feed
-      @posts= current_user.feed
+      @posts= current_user.feed.paginate(page: params[:page], per_page: 5)
     else
-      @posts = Post.all.where(visibility: Post.visibilities["everyone"]).order(created_at: :desc)
+      @posts = Post.all.where(visibility: Post.visibilities["everyone"]).order(created_at: :desc).paginate(page: params[:page], per_page: 5)
     end
   end
 

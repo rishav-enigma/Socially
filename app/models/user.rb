@@ -26,18 +26,15 @@ class User < ApplicationRecord
   end
 
   def public_posts
-    Array(Post.where(visibility: "everyone"))
+    Post.where(visibility: "everyone")
   end
 
   def feed
-    posts_on_feed = public_posts
-    posts.each do |post|
-      posts_on_feed << post
-    end
+    posts_on_feed = public_posts.or(posts)
     active_friends.each do |friend|
-      posts_on_feed += friend.posts.where(visibility: "friends")
+      posts_on_feed = posts_on_feed.or(friend.posts.where(visibility: "friends"))
     end
-    post_on_feed = posts_on_feed.uniq.sort_by {|a| a.created_at}.reverse
+    post_on_feed = posts_on_feed.order(created_at: :desc)
   end
 
   def likes?(post)
