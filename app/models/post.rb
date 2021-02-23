@@ -4,4 +4,5 @@ class Post < ApplicationRecord
   has_many :comments, dependent: :destroy
   accepts_nested_attributes_for :comments, allow_destroy: true
   has_many :likes, dependent: :destroy
+  validates :content, presence: true, length: {minimum: 2, maximum: 250}
 end
